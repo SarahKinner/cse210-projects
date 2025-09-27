@@ -1,3 +1,5 @@
+// For creativity added a way for the user to enter what mood they have been feeling that day and store that in
+
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -7,37 +9,39 @@ class Entry
     public string _date;
     public string _prompt;
     public string _response;
+    public string _mood; // New attribute for mood
 
-    // Displays the entries into a neat little format
+    // Display the entry in a neat format
     public void Display()
     {
-        Console.WriteLine($"{_date} - Prompt: {_prompt}");
+        Console.WriteLine($"{_date} - Mood: {_mood}");
+        Console.WriteLine($"Prompt: {_prompt}");
         Console.WriteLine($"Response: {_response}");
         Console.WriteLine();
     }
 
-    // Converts entries made into one line of code for saving
+    // Convert entry into one line for saving
     public string GetEntryAsFileLine()
     {
-        return $"{_date}|{_prompt}|{_response}";
+        return $"{_date}|{_mood}|{_prompt}|{_response}"; // include mood
     }
 
-    // Loads an entry from a file line
+    // Load an entry from a file line
     public static Entry LoadFromFileLine(string line)
     {
         string[] parts = line.Split('|');
         return new Entry
         {
             _date = parts[0],
-            _prompt = parts[1],
-            _response = parts[2]
+            _mood = parts[1],
+            _prompt = parts[2],
+            _response = parts[3]
         };
     }
 }
 
 class Journal
 {
-    // List to store all the journal entries
     public List<Entry> _entries = new List<Entry>();
 
     // Adds an entry to the journal
@@ -62,7 +66,7 @@ class Journal
         {
             foreach (Entry entry in _entries)
             {
-                outputFile.WriteLine(entry.GetEntryAsFileLine()); // fixed typo "GerEntryAsFileLine"
+                outputFile.WriteLine(entry.GetEntryAsFileLine());
             }
         }
     }
@@ -88,8 +92,11 @@ class PromptGenerator
         "Who was the most interesting person I interacted with today?",
         "What was the best part of my day?",
         "How did I see the hand of the Lord in my life today?",
-        "What was the strongest emotion I felt today?",
+        "Why do you feel the emotion you felt the most today",
         "If I had one thing I could do over today, what would it be?"
+        "What is something I learned today?"
+        "What do I wish there is more of?"
+        "What do I wish there is less of?"
     };
 
     public string GetRandomPrompt()
@@ -104,8 +111,8 @@ class Program
 {
     static void Main(string[] args)
     {
-        Journal journal = new Journal();   // fixed typo: Jornal → Journal
-        PromptGenerator generator = new PromptGenerator(); // fixed "Prompt Generator"
+        Journal journal = new Journal();
+        PromptGenerator generator = new PromptGenerator();
 
         int choice = 0;
         while (choice != 5)
@@ -118,7 +125,7 @@ class Program
             Console.WriteLine("5. Quit");
             Console.Write("Enter your choice: ");
 
-            string input = Console.ReadLine(); // fixed Readline → ReadLine
+            string input = Console.ReadLine();
             if (!int.TryParse(input, out choice))
             {
                 Console.WriteLine("Invalid input. Please enter a number from 1 - 5.\n");
@@ -127,6 +134,12 @@ class Program
 
             if (choice == 1)
             {
+                // Asks for the users mood first
+                Console.WriteLine("How are you feeling today? (e.g., Happy, Sad, Stressed, Excited)");
+                Console.Write("Mood: ");
+                string mood = Console.ReadLine();
+
+                // Shows the random prompt
                 string prompt = generator.GetRandomPrompt();
                 Console.WriteLine(prompt);
                 Console.Write("Your response: ");
@@ -136,10 +149,11 @@ class Program
                 {
                     _date = DateTime.Now.ToShortDateString(),
                     _prompt = prompt,
-                    _response = response
+                    _response = response,
+                    _mood = mood
                 };
 
-                journal.AddEntry(entry); // fixed ":" → ";"
+                journal.AddEntry(entry);
             }
             else if (choice == 2)
             {
@@ -150,7 +164,7 @@ class Program
                 Console.Write("Enter filename to save: ");
                 string filename = Console.ReadLine();
                 journal.SaveToFile(filename);
-                Console.WriteLine("Journal saved.\n"); // fixed missing semicolon
+                Console.WriteLine("Journal saved.\n");
             }
             else if (choice == 4)
             {
