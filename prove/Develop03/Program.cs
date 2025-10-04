@@ -28,6 +28,10 @@ class Program
             "By small and simple things are great things brought to pass; and small means in many instances doth confound the wise."
         ));
 
+        Random random = new Random();
+        int index = random.Next(scriptureLibrary.Count);
+        Scripture scripture = scriptureLibrary[index];
+
         while (!scripture.IsCompletelyHidden())
         {
             Console.Clear();
