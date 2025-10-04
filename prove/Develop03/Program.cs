@@ -10,5 +10,13 @@ class Program
                       "In all thy ways acknowledge him, and he shall direct thy paths.";
         
         Scripture scripture = new Scripture(reference, text);
+
+        while (!scripture.IsCompletelyHidden())
+        {
+            Console.Clear();
+            Console.WriteLine(scripture.GetDisplayText());
+            Console.WriteLine("\nPress Enter to continue or type 'quit' to exit:");
+            string input = Console.ReadLine();
+        }
     }
 }
