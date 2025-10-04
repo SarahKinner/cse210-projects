@@ -24,6 +24,6 @@ class Program
         }
 
         Console.Clear();
-        Console.WriteLine("All words are hidden. Program has ended.")
+        Console.WriteLine("All words are hidden. Program has ended.");
     }
 }
