@@ -22,4 +22,16 @@ pubilc class Reference
         _verseStart = verseStart;
         _verseEnd = verseEnd;
     }
+
+    public string GetDisplayText()
+    {
+        if (_verseEnd.HasValue)
+        {
+            return $"{_book} {_chapter}:{_verseStart}-{_verseEnd}";
+        }
+        else
+        {
+            return $"{_book} {_chapter}:{_verseStart}";
+        }
+    }
 }
