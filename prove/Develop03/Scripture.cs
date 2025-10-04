@@ -13,7 +13,7 @@ public class Scripture
         _words = new List<Word>();
         _random = new Random();
 
-        string [] splitWords = text.Split(' ');
+        string[] splitWords = text.Split(' ', StringSplitOptions.RemoveEmptyEntries);
         foreach (string word in splitWords)
         {
             _words.Add(new Word(word));
@@ -22,10 +22,18 @@ public class Scripture
 
     public void HideRandomWords(int count)
     {
+        List<Word> visibleWords = _words.FindAll(word => !word.IsHidden());
+
+        if (visibleWords.Count == 0)
+            return;
+
+        count = Math.Min(count, visibleWords.Count);
+
         for (int i = 0; i < count; i++)
         {
-            int index = _random.Next(_words.Count);
-            _words[index].Hide();
+            int index = _random.Next(visibleWords.Count);
+            visibleWords[index].Hide();
+            visibleWords.RemoveAt(index);
         }
     }
 
@@ -34,7 +42,7 @@ public class Scripture
         foreach (Word word in _words)
         {
             if (!word.IsHidden())
-            return false;
+                return false;
         }
         return true;
     }
