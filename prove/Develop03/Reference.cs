@@ -1,9 +1,9 @@
-pubilc class Reference
+public class Reference
 {
     private string _book;
     private int _chapter;
     private int _verseStart;
-    private int _verseEnd;
+    private int? _verseEnd;
 
     //Base if the passage is using one verse
     public Reference(string book, int chapter, int verse)
@@ -15,7 +15,7 @@ pubilc class Reference
     }
 
     //Base if the passage is using multiple verses
-    public Reference(string book, int chapter, int VerseStart, int verseEnd)
+    public Reference(string book, int chapter, int verseStart, int verseEnd)
     {
         _book = book;
         _chapter = chapter;
