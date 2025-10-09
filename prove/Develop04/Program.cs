@@ -12,8 +12,8 @@ class Program
             Console.WriteLine("2. Reflection Activity");
             Console.WriteLine("3. Listing Activity");
             Console.WriteLine("4. Quit");
-            Console.Write("Choose an activity: ")
-
+            Console.Write("Choose an activity: ");
+            
             string choice = Console.ReadLine();
             Activity activity = choice switch
             {
