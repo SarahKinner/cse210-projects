@@ -23,6 +23,14 @@ class Program
                 "4" => null,
                 _ => null
             };
+
+            if (activity == null)
+            {
+                if (choice == "4") break;
+                Console.WriteLine("Invalid choice. Press Enter to try again.");
+                Console.ReadLine();
+                continue;
+            }
         
                 
                 
