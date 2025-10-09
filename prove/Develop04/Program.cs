@@ -31,10 +31,10 @@ class Program
                 Console.ReadLine();
                 continue;
             }
-        
-                
-                
-            
+
+            activity.Start();
+            Console.WriteLine("Press Enter to return to menu.");
+            Console.ReadLine();
         }
     }
 }
