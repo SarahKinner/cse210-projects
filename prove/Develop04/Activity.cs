@@ -12,4 +12,20 @@ public abstract class Activity
         _name = name;
         _description = description;
     }
+
+    public void Start()
+    {
+        Console.Clear();
+        Console.WriteLine($"Welcome to the {_name} Activity.\n");
+        Console.WriteLine(_description);
+        Console.Write("\nEnter duration in seconds: ");
+        _duration = int.Parse(Console.ReadLine() ?? "30");
+
+        Console.Clear();
+        Console.WriteLine("Get ready...");
+        PauseCountDown(3);
+
+        RunActivity();
+        End();
+    }
 }
