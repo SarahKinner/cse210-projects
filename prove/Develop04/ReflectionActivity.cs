@@ -10,7 +10,7 @@ public class ReflectionActivity : Activity
     };
 
     public ReflectionActivity()
-        : base("Reflection", "This activity helps you reflect on moments of strength and gratitude.")
+        : base("Reflection", "This activity helps you reflect on moments of strength and gratitude.") { }
 
     protected override void RunActivity()
     {
