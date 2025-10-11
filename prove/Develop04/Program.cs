@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+// For the creativity part of the project added a way so it'll store how many times each activity was picked and done
 
 class Program
 {
