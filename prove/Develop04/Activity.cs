@@ -7,7 +7,7 @@ public abstract class Activity
     protected string _description;
     protected int _duration;
 
-    public Activity(string name, string _description)
+    public Activity(string name, string description)
     {
         _name = name;
         _description = description;
@@ -23,21 +23,23 @@ public abstract class Activity
 
         Console.Clear();
         Console.WriteLine("Get ready...");
-        PauseCountDown(3);
+        PauseCountdown(3);
 
         RunActivity();
         End();
     }
 
+    protected abstract void RunActivity();
+
     protected void End()
     {
         Console.WriteLine($"\nGood job! You completed the {_name} Activity for {_duration} seconds!");
-        PauseCountDown(3);
+        PauseCountdown(3);
     }
 
-    protected void PauseCountDown(int seconds)
+    protected void PauseCountdown(int seconds)
     {
-        for (int i = seconds)
+        for (int i = seconds; i > 0; i--)
         {
             Console.Write(i);
             Thread.Sleep(1000);
