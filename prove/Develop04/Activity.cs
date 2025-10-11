@@ -35,7 +35,9 @@ public abstract class Activity
     protected void End()
     {
         Console.WriteLine($"\nGood job! You completed the {_name} Activity for {_duration} seconds!");
-        ShowSpinner(3);
+        ShowSpinner(3); 
+
+        Program.IncrementActivityLog(_name);
     }
 
     protected void PauseCountdown(int seconds)
