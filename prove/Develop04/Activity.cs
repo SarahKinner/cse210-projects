@@ -18,14 +18,15 @@ public abstract class Activity
         Console.Clear();
         Console.WriteLine($"Welcome to the {_name} Activity.\n");
         Console.WriteLine(_description);
-        Console.Write("\nEnter duration in seconds: ");
+        Console.Write("\nEnter the duration of the activity in seconds: ");
         _duration = int.Parse(Console.ReadLine() ?? "30");
 
         Console.Clear();
         Console.WriteLine("Get ready...");
-        PauseCountdown(3);
+        ShowSpinner(3);
 
         RunActivity();
+
         End();
     }
 
@@ -34,16 +35,21 @@ public abstract class Activity
     protected void End()
     {
         Console.WriteLine($"\nGood job! You completed the {_name} Activity for {_duration} seconds!");
-        PauseCountdown(3);
+        ShowSpinner(3);
     }
 
-    protected void PauseCountdown(int seconds)
+    protected void ShowSpinner(int seconds)
     {
-        for (int i = seconds; i > 0; i--)
+        DateTime endTime = DateTime.Now.AddSeconds(seconds);
+        char[] spinner = { '|', '/', '-', '\\' };
+
+        int i = 0;
+        while (DateTime.Now < endTime)
         {
-            Console.Write(i);
-            Thread.Sleep(1000);
+            Console.Write(spinner[i % spinner.Length]);
+            Thread.Sleep(200);
             Console.Write("\b \b");
+            i++;
         }
         Console.WriteLine();
     }
