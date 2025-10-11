@@ -11,4 +11,13 @@ public class ReflectionActivity : Activity
 
     public ReflectionActivity()
         : base("Reflection", "This activity helps you reflect on moments of strength and gratitude.")
+
+    protected override void RunActivity()
+    {
+        Random rand = new Random();
+        string prompt = _prompts[rand.Next(_prompts.Length)];
+        Console.WriteLine($"\n{prompt}");
+        Console.WriteLine("Reflect on this for a few moments...");
+        PauseCountdown(_duration);
+    }
 }
