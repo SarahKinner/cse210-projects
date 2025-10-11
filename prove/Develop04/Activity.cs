@@ -28,4 +28,21 @@ public abstract class Activity
         RunActivity();
         End();
     }
+
+    protected void End()
+    {
+        Console.WriteLine($"\nGood job! You completed the {_name} Activity for {_duration} seconds!");
+        PauseCountDown(3);
+    }
+
+    protected void PauseCountDown(int seconds)
+    {
+        for (int i = seconds)
+        {
+            Console.Write(i);
+            Thread.Sleep(1000);
+            Console.Write("\b \b");
+        }
+        Console.WriteLine();
+    }
 }
