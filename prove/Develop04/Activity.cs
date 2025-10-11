@@ -23,7 +23,7 @@ public abstract class Activity
 
         Console.Clear();
         Console.WriteLine("Get ready...");
-        ShowSpinner(3);
+        PauseCountdown(3);
 
         RunActivity();
 
@@ -36,6 +36,17 @@ public abstract class Activity
     {
         Console.WriteLine($"\nGood job! You completed the {_name} Activity for {_duration} seconds!");
         ShowSpinner(3);
+    }
+
+    protected void PauseCountdown(int seconds)
+    {
+        for (int i = seconds; i > 0; i--)
+        {
+            Console.Write(i);
+            Thread.Sleep(1000);
+            Console.Write("\b \b");
+        }
+        Console.WriteLine();
     }
 
     protected void ShowSpinner(int seconds)
