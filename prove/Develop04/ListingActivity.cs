@@ -6,12 +6,12 @@ public class ListingActivity : Activity
 {
     private string[] _prompts = {
         "List people who make you feel happy.",
-        "List things you're grateful for today.",
+        "List things you’re grateful for today.",
         "List moments that made you smile recently."
     };
 
     public ListingActivity()
-        : base("Listing", "This activity helps you list positive things to lift your mood") { }
+        : base("Listing", "This activity helps you list positive things to lift your mood.") { }
 
     protected override void RunActivity()
     {
@@ -29,6 +29,6 @@ public class ListingActivity : Activity
             responses.Add(Console.ReadLine());
         }
 
-        Console.WriteLine($"\nYou listed {responses.Count} items!")
+        Console.WriteLine($"\nYou listed {responses.Count} items!");
     }
 }
