@@ -36,6 +36,12 @@ public abstract class Goal
         return $"Due: {_dueDate.Value.ToShortDateString()} ({status})";
     }
 
+    public int? GetDaysUntilDue()
+    {
+        if (!_dueDate.HasValue) return null;
+        return (int)(_dueDate.Value - DateTime.Now).TotalDays;
+    }
+
     public abstract int RecordEvent();
     public abstract int GetPoints();
     public abstract string GetStringRepresentation();

@@ -200,14 +200,11 @@ public class GoalManager
 
         foreach (Goal goal in _goals)
         {
-            if (goal.HasDueDate())
+            int? daysRemaining = goal.GetDaysUntilDue();
+            if (daysRemaining.HasValue && daysRemaining.Value <= 3)
             {
-                TimeSpan remaining = goal._dueDate.Value - DateTime.Now;
-                if (remaining.TotalDays <= 3)
-                {
-                    Console.WriteLine($"{goal.GetDetailsString()} - {goal.GetDueDateDisplay()}");
-                    found = true;
-                }
+                Console.WriteLine($"{goal.GetDetailsString()} - {goal.GetDueDateDisplay()}");
+                found = true;
             }
         }
 
