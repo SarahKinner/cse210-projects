@@ -43,4 +43,41 @@ public class GoalManager
             }
         }
     }
+    private void CreateGoal()
+    {
+        Console.WriteLine("The types of Goals are:");
+        Console.WriteLine("  1. Simple Goal");
+        Console.WriteLine("  2. Eternal Goal");
+        Console.WriteLine("  3. Checklist Goal");
+        Console.Write("Which type of goal would you like to create? ");
+        string choice = Console.ReadLine();
+
+        Console.Write("Enter goal title: ");
+        string title = Console.ReadLine();
+        Console.Write("Enter description: ");
+        string description = Console.ReadLine();
+        Console.Write("Enter points: ");
+        int points = int.Parse(Console.ReadLine());
+
+        if (choice == "1")
+        {
+            _goals.Add(new SimpleGoal(title, description, points));
+        }
+        else if (choice == "2")
+        {
+            Console.Write("Enter target amount: ");
+            int targetAmount = int.Parse(Console.ReadLine());
+            Console.Write("Enter bonus: ");
+            int bonus = int.Parse(Console.ReadLine());
+            _goals.Add(new EternalGoal(title, description, points, targetAmount, bonus));
+        }
+        else if (choice == "3")
+        {
+            Console.Write("Enter target amount: ");
+            int targetAmount = int.Parse(Console.ReadLine());
+            Console.Write("Enter bonus: ");
+            int bonus = int.Parse(Console.ReadLine());
+            _goals.Add(new ChecklistGoal(title, description, points, targetAmount, bonus));
+        }
+    }
 }
