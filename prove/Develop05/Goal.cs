@@ -1,12 +1,12 @@
 using System;
 
-public abstract class GoalManager
+public abstract class Goal
 {
     protected string _title;
     protected string _description;
     protected int _points;
 
-    public Goal(string title, string _description, int points)
+    public Goal(string title, string description, int points)
     {
         _title = title;
         _description = description;

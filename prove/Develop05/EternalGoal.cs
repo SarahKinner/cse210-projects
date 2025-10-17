@@ -35,7 +35,7 @@ public class EternalGoal : Goal
         return $"{status} {_title} ({_description}) -- Completed {_amountCompleted}/{_targetAmount} times";
     }
 
-    pubilc override string GetStringRepresentation()
+    public override string GetStringRepresentation()
     {
         return $"EternalGoal:{_title},{_description},{_points},{_amountCompleted},{_targetAmount},{_bonus}";
     }
