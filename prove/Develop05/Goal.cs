@@ -2,23 +2,52 @@ using System;
 
 public abstract class Goal
 {
-    private string _title;
-    private string _description;
-    private int _points;
+    protected string _title;
+    protected string _description;
+    protected int _points;
+    protected bool _isComplete;
+    protected DateTime? _dueDate; // optional due date
 
-    protected Goal(string title, string description, int points)
+    public Goal(string title, string description, int points)
     {
         _title = title;
         _description = description;
         _points = points;
+        _isComplete = false;
+        _dueDate = null;
     }
 
-    public string Title => _title;
-    public string Description => _description;
-    public int Points => _points;
+    public void SetDueDate(DateTime dueDate)
+    {
+        _dueDate = dueDate;
+    }
 
-    public abstract int RecordEvent();
-    public abstract bool IsComplete();
+    public bool HasDueDate()
+    {
+        return _dueDate.HasValue;
+    }
+
+    public string GetDueDateDisplay()
+    {
+        if (!_dueDate.HasValue)
+            return "";
+        int daysRemaining = (int)(_dueDate.Value - DateTime.Now).TotalDays;
+        string status = daysRemaining >= 0 ? $"{daysRemaining} days remaining" : "⚠️ Past due!";
+        return $"Due: {_dueDate.Value.ToShortDateString()} ({status})";
+    }
+
+    public abstract void RecordEvent();
+    public abstract int GetPoints();
     public abstract string GetStringRepresentation();
-    public abstract string Display();
+
+    public virtual string GetDetailsString()
+    {
+        string status = _isComplete ? "[X]" : "[ ]";
+        return $"{status} {_title} ({_description})";
+    }
+
+    public bool IsComplete()
+    {
+        return _isComplete;
+    }
 }
