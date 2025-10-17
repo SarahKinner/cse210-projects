@@ -43,6 +43,7 @@ public class GoalManager
             }
         }
     }
+
     private void CreateGoal()
     {
         Console.WriteLine("The types of Goals are:");
