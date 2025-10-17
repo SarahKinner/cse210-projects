@@ -118,4 +118,35 @@ public class GoalManager
         }
         Console.WriteLine("Goals saved successfully!");
     }
+
+    private void LoadGoals()
+    {
+        Console.Write("Enter filename to load: ");
+        string filename = Console.ReadLine();
+
+        string[] lines = File.ReadAllLines(filename);
+        _score = int.Parse(lines[0]);
+        _goals.Clear();
+
+        for (int i = 1; i < lines.Length; i++)
+        {
+            string[] parts = lines[i].Split(":");
+            string type = parts[0];
+            string[] details = parts[1].Split(",");
+
+            if (type == "SimpleGoal")
+            {
+                _goals.Add(new SimpleGoal(details[0], details[1], int.Parse(details[2])));
+            }
+            else if (type == "EternalGoal")
+            {
+                _goals.Add(new EternalGoal(details[0], details[1], int.Parse(details[2]), int.Parse(details[4]), int.Parse(details[5])));
+            }
+            else if (type == "ChecklistGoal")
+            {
+                _goals.Add(new ChecklistGoal(details[0], details[1], int.Parse(details[2]), int.Parse(details[4]), int.Parse(details[5])));
+            }
+        }
+        Console.WriteLine("Goals loaded successfully!");
+    }
 }
