@@ -6,37 +6,46 @@ public class ChecklistGoal : Goal
     private int _targetAmount;
     private int _bonus;
 
-    public ChecklistGoal(string title, string description, int points, int targetAmount, int bonus)
+    public ChecklistGoal(string title, string description, int points, int targetAmount, int bonus, int amountCompleted = 0)
         : base(title, description, points)
     {
-        _amountCompleted = 0;
         _targetAmount = targetAmount;
         _bonus = bonus;
+        _amountCompleted = amountCompleted;
     }
 
-    public override void RecordEvent()
+    public override int RecordEvent()
     {
-        _amountCompleted++;
-        Console.WriteLine($"You recorded progress for '{_title}' {_amountCompleted}/{_targetAmount} times and earned {_points} points!");
-        if (_amountCompleted == _targetAmount)
+        if (_amountCompleted < _targetAmount)
         {
-            Console.WriteLine($"✅ You finished this goal and earned a {_bonus} point bonus!");
+            _amountCompleted++;
+            int total = Points;
+
+            if (_amountCompleted == _targetAmount)
+            {
+                total += _bonus;
+                Console.WriteLine($"Congratulations! You completed the checklist goal and earned a bonus of {_bonus} points!");
+            }
+
+            return total;
+        }
+        else
+        {
+            Console.WriteLine("This checklist goal is already complete!");
+            return 0;
         }
     }
 
-    public override bool IsComplete()
-    {
-        return _amountCompleted >= _targetAmount;
-    }
-
-    public override string GetDetailsString()
-    {
-        string status = IsComplete() ? "[X]" : "[ ]";
-        return $"{status} {_title} ({_description}) -- Completed {_amountCompleted}/{_targetAmount} times";
-    }
+    public override bool IsComplete() => _amountCompleted >= _targetAmount;
 
     public override string GetStringRepresentation()
     {
-        return $"ChecklistGoal:{_title},{_description},{_points},{_amountCompleted},{_targetAmount},{_bonus}";
+        return $"Checklist|{Title}|{Description}|{Points}|{_targetAmount}|{_bonus}|{_amountCompleted}";
+    }
+
+    public override string Display()
+    {
+        string status = IsComplete() ? "[X]" : "[ ]";
+        return $"{status} {Title} ({Description}) -- Completed {_amountCompleted}/{_targetAmount}";
     }
 }
