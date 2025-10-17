@@ -23,4 +23,20 @@ public class ChecklistGoal : Goal
             Console.WriteLine($"✅ You finished this goal and earned a {_bonus} point bonus!");
         }
     }
+
+    public override bool IsComplete()
+    {
+        return _amountCompleted >= _targetAmount;
+    }
+
+    public override string GetDetailsString()
+    {
+        string status = IsComplete() ? "[X]" : "[ ]";
+        return $"{status} {_title} ({_description}) -- Completed {_amountCompleted}/{_targetAmount} times";
+    }
+
+    public override string GetStringRepresentation()
+    {
+        return $"ChecklistGoal:{_title},{_description},{_points},{_amountCompleted},{_targetAmount},{_bonus}";
+    }
 }
