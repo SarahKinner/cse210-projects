@@ -9,4 +9,15 @@ public class SimpleGoal : Goal
     {
         _isComplete = false;
     }
+
+    public override void RecordEvent()
+    {
+        _isComplete = true;
+        Console.WriteLine($"Congratulations! You earned {_points} points!");
+    }
+
+    public override bool IsComplete()
+    {
+        return _isComplete;
+    }
 }
