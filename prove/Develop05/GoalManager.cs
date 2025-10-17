@@ -80,4 +80,42 @@ public class GoalManager
             _goals.Add(new ChecklistGoal(title, description, points, targetAmount, bonus));
         }
     }
+
+    private void ListGoals()
+    {
+        Console.WriteLine("\nYour Goals:");
+        for (int i = 0; i < _goals.Count; i++)
+        {
+            Console.WriteLine($"{i + 1}. {_goals[i].GetDetailsString()}");
+        }
+    }
+
+    private void RecordEvent()
+    {
+        ListGoals();
+        Console.Write("\nWhich goal did you accomplish? ");
+        int index = int.Parse(Console.ReadLine()) - 1;
+
+        if (index >= 0 && index < _goals.Count)
+        {
+            _goals[index].RecordEvent();
+            _score += _goals[index].GetPoints();
+        }
+    }
+
+    private void SaveGoals()
+    {
+        Console.Write("Enter filename to save: ");
+        string filename = Console.ReadLine();
+
+        using (StreamWriter outputFile = new StreamWriter(filename))
+        {
+            outputFile.WriteLine(_score);
+            foreach (Goal goal in _goals)
+            {
+                outputFile.WriteLine(goal.GetStringRepresentation());
+            }
+        }
+        Console.WriteLine("Goals saved successfully!");
+    }
 }
