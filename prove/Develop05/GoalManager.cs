@@ -5,115 +5,88 @@ using System.IO;
 public class GoalManager
 {
     private List<Goal> _goals = new List<Goal>();
-    private int _score = 0;
+    private int _totalPoints = 0;
 
     public void Start()
     {
-        bool running = true;
-        while (running)
+        while (true)
         {
-            Console.WriteLine($"\nYour current score: {_score}");
-            Console.WriteLine("\nMenu Options:");
+            Console.WriteLine("\n--- Goal Tracker ---");
+            Console.WriteLine($"Total Points: {_totalPoints}");
             Console.WriteLine("1. Create New Goal");
             Console.WriteLine("2. List Goals");
             Console.WriteLine("3. Record Event");
-            Console.WriteLine("4. Save Goals");
-            Console.WriteLine("5. Load Goals");
-            Console.WriteLine("6. Check Due Date Reminders");
-            Console.WriteLine("7. Quit");
-            Console.Write("Select a choice from the menu: ");
+            Console.WriteLine("4. Set Due Date");
+            Console.WriteLine("5. Save Goals");
+            Console.WriteLine("6. Load Goals");
+            Console.WriteLine("7. Check Due Date Reminders");
+            Console.WriteLine("8. Quit");
+            Console.Write("Select an option: ");
+            string choice = Console.ReadLine();
 
-            string input = Console.ReadLine();
-            switch (input)
+            switch (choice)
             {
-                case "1":
-                    CreateGoal();
-                    break;
-                case "2":
-                    ListGoals();
-                    break;
-                case "3":
-                    RecordEvent();
-                    break;
-                case "4":
-                    SaveGoals();
-                    break;
-                case "5":
-                    LoadGoals();
-                    break;
-                case "6":
-                    CheckReminders();
-                    break;
-                case "7":
-                    running = false;
-                    Console.WriteLine("Goodbye!");
-                    break;
-                default:
-                    Console.WriteLine("Invalid choice. Please select again.");
-                    break;
+                case "1": CreateGoal(); break;
+                case "2": ListGoals(); break;
+                case "3": RecordEvent(); break;
+                case "4": SetDueDate(); break;
+                case "5": SaveGoals(); break;
+                case "6": LoadGoals(); break;
+                case "7": CheckReminders(); break;
+                case "8": return;
+                default: Console.WriteLine("Invalid option."); break;
             }
         }
     }
-    
-    public void CreateGoal()
+
+    private void CreateGoal()
     {
-        Console.WriteLine("\nWhat type of goal would you like to create?");
-        Console.WriteLine("1. Simple Goal");
-        Console.WriteLine("2. Eternal Goal");
-        Console.WriteLine("3. Checklist Goal");
-        Console.Write("Enter your choice: ");
-        int choice = int.Parse(Console.ReadLine());
+        Console.WriteLine("\nGoal Types:\n1. Simple\n2. Eternal\n3. Checklist");
+        Console.Write("Choose type: ");
+        string type = Console.ReadLine();
 
-        Console.Write("Enter the goal title: ");
+        Console.Write("Enter title: ");
         string title = Console.ReadLine();
-
-        Console.Write("Enter a short description: ");
+        Console.Write("Enter description: ");
         string description = Console.ReadLine();
-
-        Console.Write("Enter the point value: ");
+        Console.Write("Enter points: ");
         int points = int.Parse(Console.ReadLine());
 
-        Goal newGoal = null;
+        Goal goal = null;
 
-        if (choice == 1)
+        switch (type)
         {
-            newGoal = new SimpleGoal(title, description, points);
-        }
-        else if (choice == 2)
-        {
-            newGoal = new EternalGoal(title, description, points);
-        }
-        else if (choice == 3)
-        {
-            Console.Write("How many times must this goal be completed? ");
-            int target = int.Parse(Console.ReadLine());
-            Console.Write("Enter the bonus for completing all: ");
-            int bonus = int.Parse(Console.ReadLine());
-            newGoal = new ChecklistGoal(title, description, points, target, bonus);
+            case "1": goal = new SimpleGoal(title, description, points); break;
+            case "2": goal = new EternalGoal(title, description, points); break;
+            case "3":
+                Console.Write("Enter target amount: ");
+                int target = int.Parse(Console.ReadLine());
+                Console.Write("Enter bonus points: ");
+                int bonus = int.Parse(Console.ReadLine());
+                goal = new ChecklistGoal(title, description, points, target, bonus);
+                break;
+            default:
+                Console.WriteLine("Invalid type."); return;
         }
 
         Console.Write("Would you like to set a due date? (y/n): ");
         string answer = Console.ReadLine().ToLower();
         if (answer == "y")
         {
-            Console.Write("Enter the due date (MM/DD/YYYY): ");
-            DateTime dueDate;
-            while (!DateTime.TryParse(Console.ReadLine(), out dueDate))
-            {
-                Console.Write("Invalid date. Please enter again (MM/DD/YYYY): ");
-            }
-            newGoal.SetDueDate(dueDate);
+            Console.Write("Enter due date (YYYY-MM-DD): ");
+            DateTime dueDate = DateTime.Parse(Console.ReadLine());
+            goal.SetDueDate(dueDate);
         }
 
-        _goals.Add(newGoal);
-        Console.WriteLine("✅ Goal created successfully!");
+        _goals.Add(goal);
+        Console.WriteLine("Goal created!");
     }
 
     public void ListGoals()
     {
         if (_goals.Count == 0)
         {
-            Console.WriteLine("\nNo goals created yet.");
+            Console.WriteLine("No goals created yet.");
             return;
         }
 
@@ -122,63 +95,78 @@ public class GoalManager
         foreach (Goal goal in _goals)
         {
             Console.WriteLine($"{index}. {goal.GetDetailsString()}");
-
             if (goal.HasDueDate())
                 Console.WriteLine($"   {goal.GetDueDateDisplay()}");
-
             index++;
         }
     }
 
-    public void RecordEvent()
+    private void RecordEvent()
     {
         if (_goals.Count == 0)
         {
-            Console.WriteLine("\nNo goals to record progress on.");
+            Console.WriteLine("No goals to record.");
             return;
         }
 
-        Console.WriteLine("\nWhich goal did you accomplish?");
-        for (int i = 0; i < _goals.Count; i++)
-        {
-            Console.WriteLine($"{i + 1}. {_goals[i].GetDetailsString()}");
-        }
+        ListGoals();
+        Console.Write("Select goal number: ");
+        int index = int.Parse(Console.ReadLine()) - 1;
 
-        Console.Write("Enter the number of the goal: ");
-        int choice = int.Parse(Console.ReadLine());
-        if (choice < 1 || choice > _goals.Count)
+        if (index < 0 || index >= _goals.Count)
         {
-            Console.WriteLine("Invalid choice.");
+            Console.WriteLine("Invalid selection.");
             return;
         }
 
-        Goal selectedGoal = _goals[choice - 1];
-        int pointsEarned = selectedGoal.RecordEvent();
-        _score += pointsEarned;
+        int earned = _goals[index].RecordEvent();
+        _totalPoints += earned;
+    }
 
-        Console.WriteLine($"🎉 You earned {pointsEarned} points!");
-        Console.WriteLine($"Your new total score is: {_score}");
+    private void SetDueDate()
+    {
+        if (_goals.Count == 0)
+        {
+            Console.WriteLine("No goals available.");
+            return;
+        }
+
+        ListGoals();
+        Console.Write("Select goal number to set due date: ");
+        int index = int.Parse(Console.ReadLine()) - 1;
+
+        if (index < 0 || index >= _goals.Count)
+        {
+            Console.WriteLine("Invalid selection.");
+            return;
+        }
+
+        Console.Write("Enter due date (YYYY-MM-DD): ");
+        DateTime dueDate = DateTime.Parse(Console.ReadLine());
+        _goals[index].SetDueDate(dueDate);
+        Console.WriteLine("Due date set successfully!");
     }
 
     public void SaveGoals()
     {
-        Console.Write("Enter the filename to save goals (e.g., goals.txt): ");
+        Console.Write("Enter filename to save: ");
         string filename = Console.ReadLine();
 
-        using (StreamWriter outputFile = new StreamWriter(filename))
+        using (StreamWriter writer = new StreamWriter(filename))
         {
-            outputFile.WriteLine(_score);
+            writer.WriteLine(_totalPoints);
             foreach (Goal goal in _goals)
             {
-                outputFile.WriteLine(goal.GetStringRepresentation());
+                writer.WriteLine(goal.GetStringRepresentation());
             }
         }
-        Console.WriteLine("💾 Goals saved successfully!");
+
+        Console.WriteLine("Goals saved successfully!");
     }
 
     public void LoadGoals()
     {
-        Console.Write("Enter the filename to load goals from: ");
+        Console.Write("Enter filename to load: ");
         string filename = Console.ReadLine();
 
         if (!File.Exists(filename))
@@ -188,47 +176,41 @@ public class GoalManager
         }
 
         string[] lines = File.ReadAllLines(filename);
-        _score = int.Parse(lines[0]);
+        _totalPoints = int.Parse(lines[0]);
         _goals.Clear();
 
         for (int i = 1; i < lines.Length; i++)
         {
             string[] parts = lines[i].Split('|');
-            string type = parts[0];
             Goal goal = null;
+            if (parts[0] == "SimpleGoal") goal = SimpleGoal.CreateFromString(parts);
+            else if (parts[0] == "EternalGoal") goal = EternalGoal.CreateFromString(parts);
+            else if (parts[0] == "ChecklistGoal") goal = ChecklistGoal.CreateFromString(parts);
 
-            if (type == "SimpleGoal")
-                goal = SimpleGoal.CreateFromString(parts);
-            else if (type == "EternalGoal")
-                goal = EternalGoal.CreateFromString(parts);
-            else if (type == "ChecklistGoal")
-                goal = ChecklistGoal.CreateFromString(parts);
-
-            _goals.Add(goal);
+            if (goal != null) _goals.Add(goal);
         }
 
-        Console.WriteLine("📂 Goals loaded successfully!");
+        Console.WriteLine("Goals loaded successfully!");
     }
 
     public void CheckReminders()
     {
-        Console.WriteLine("\n🔔 Upcoming Due Dates:");
+        Console.WriteLine("\n🔔 Upcoming Due Dates (within 3 days):");
         bool found = false;
 
         foreach (Goal goal in _goals)
         {
             if (goal.HasDueDate())
             {
-                TimeSpan remaining = goal.GetDueDate() - DateTime.Now;
+                TimeSpan remaining = goal._dueDate.Value - DateTime.Now;
                 if (remaining.TotalDays <= 3)
                 {
-                    Console.WriteLine($"⚠️  {goal.GetDetailsString()} — {goal.GetDueDateDisplay()}");
+                    Console.WriteLine($"{goal.GetDetailsString()} - {goal.GetDueDateDisplay()}");
                     found = true;
                 }
             }
         }
 
-        if (!found)
-            Console.WriteLine("No upcoming due dates!");
+        if (!found) Console.WriteLine("No upcoming due dates.");
     }
 }

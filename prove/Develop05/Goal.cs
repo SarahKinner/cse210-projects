@@ -6,7 +6,7 @@ public abstract class Goal
     protected string _description;
     protected int _points;
     protected bool _isComplete;
-    protected DateTime? _dueDate; // optional due date
+    protected DateTime? _dueDate;
 
     public Goal(string title, string description, int points)
     {
@@ -36,7 +36,7 @@ public abstract class Goal
         return $"Due: {_dueDate.Value.ToShortDateString()} ({status})";
     }
 
-    public abstract void RecordEvent();
+    public abstract int RecordEvent();
     public abstract int GetPoints();
     public abstract string GetStringRepresentation();
 

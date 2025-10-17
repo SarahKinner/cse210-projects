@@ -7,10 +7,19 @@ public class SimpleGoal : Goal
     {
     }
 
-    public override void RecordEvent()
+    public override int RecordEvent()
     {
-        _isComplete = true;
-        Console.WriteLine($"Goal '{_title}' completed! You earned {_points} points!");
+        if (!_isComplete)
+        {
+            _isComplete = true;
+            Console.WriteLine($"Goal '{_title}' completed! You earned {_points} points!");
+            return _points;
+        }
+        else
+        {
+            Console.WriteLine($"Goal '{_title}' is already completed.");
+            return 0;
+        }
     }
 
     public override int GetPoints()
@@ -21,5 +30,17 @@ public class SimpleGoal : Goal
     public override string GetStringRepresentation()
     {
         return $"SimpleGoal|{_title}|{_description}|{_points}|{_isComplete}";
+    }
+
+    public static SimpleGoal CreateFromString(string[] parts)
+    {
+        string title = parts[1];
+        string description = parts[2];
+        int points = int.Parse(parts[3]);
+        bool isComplete = bool.Parse(parts[4]);
+
+        SimpleGoal goal = new SimpleGoal(title, description, points);
+        if (isComplete) goal.RecordEvent();
+        return goal;
     }
 }
