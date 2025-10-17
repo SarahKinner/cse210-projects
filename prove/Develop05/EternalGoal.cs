@@ -23,4 +23,20 @@ public class EternalGoal : Goal
             Console.WriteLine($"🎉 Bonus achieved! You earned an extra {_bonus} points!");
         }
     }
+
+    public override bool IsComplete()
+    {
+        return _amountCompleted >= _targetAmount;
+    }
+
+    public override string GetDetailsString()
+    {
+        string status = IsComplete() ? "[X]" : "[ ]";
+        return $"{status} {_title} ({_description}) -- Completed {_amountCompleted}/{_targetAmount} times";
+    }
+
+    pubilc override string GetStringRepresentation()
+    {
+        return $"EternalGoal:{_title},{_description},{_points},{_amountCompleted},{_targetAmount},{_bonus}";
+    }
 }
