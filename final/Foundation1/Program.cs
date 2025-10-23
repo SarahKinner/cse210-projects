@@ -1,63 +1,86 @@
-class Comment:
-    def __init__(self, commenter_name, comment_text):
-        self.commenter_name = commenter_name
-        self.comment_text = comment_text
+using System;
+using System.Collections.Generic;
 
-    def get_commenter_name(self):
-        return self.commenter_name
+class Comment
+{
+    public string CommenterName { get; set; }
+    public string CommentText { get; set; }
 
-    def get_comment_text(self):
-        return self.comment_text
+    public Comment(string commenterName, string commentText)
+    {
+        CommenterName = commenterName;
+        CommentText = commentText;
+    }
 
-class Video:
-    def __init__(self, title, author, length_in_seconds):
-        self.title = title
-        self.author = author
-        self.length_in_seconds = length_in_seconds
-        self.comments = []
+    public string GetCommenterName() => CommenterName;
+    public string GetCommentText() => CommentText;
+}
 
-    def add_comment(self, comment):
-        """Add a Comment object to the video"""
-        self.comments.append(comment)
+class Video
+{
+    public string Title { get; set; }
+    public string Author { get; set; }
+    public int LengthInSeconds { get; set; }
+    public List<Comment> Comments { get; set; } = new List<Comment>();
 
-    def get_number_of_comments(self):
-        """Return how many comments are on this video"""
-        return len(self.comments)
+    public Video(string title, string author, int lengthInSeconds)
+    {
+        Title = title;
+        Author = author;
+        LengthInSeconds = lengthInSeconds;
+    }
 
-    def display_video_info(self):
-        """Display basic video details"""
-        print(f"Title: {self.title}")
-        print(f"Author: {self.author}")
-        print(f"Length: {self.length_in_seconds} seconds")
-        print(f"Number of Comments: {self.get_number_of_comments()}")
-        print("Comments:")
+    public void AddComment(Comment comment)
+    {
+        Comments.Add(comment);
+    }
 
-        for comment in self.comments:
-            print(f"- {comment.get_commenter_name()}: {comment.get_comment_text()}")
-        print("-" * 40)
+    public int GetNumberOfComments()
+    {
+        return Comments.Count;
+    }
 
-def main():
-    video1 = Video("How to Cook Pasta", "Chef Alex", 420)
-    video2 = Video("Learn Python in 10 Minutes", "CodeWithMe", 600)
-    video3 = Video("Funny Cat Compilation", "KittenWorld", 300)
+    public void DisplayVideoInfo()
+    {
+        Console.WriteLine($"Title: {Title}");
+        Console.WriteLine($"Author: {Author}");
+        Console.WriteLine($"Length: {LengthInSeconds} seconds");
+        Console.WriteLine($"Number of Comments: {GetNumberOfComments()}");
+        Console.WriteLine("Comments:");
 
-    video1.add_comment(Comment("Sarah", "This helped me so much, thanks!"))
-    video1.add_comment(Comment("Mike", "Now I’m hungry again 😋"))
-    video1.add_comment(Comment("Lena", "Perfect tutorial!"))
+        foreach (var comment in Comments)
+        {
+            Console.WriteLine($"- {comment.GetCommenterName()}: {comment.GetCommentText()}");
+        }
+        Console.WriteLine(new string('-', 40));
+    }
+}
 
-    video2.add_comment(Comment("Tom", "Super easy to follow!"))
-    video2.add_comment(Comment("Emma", "Please make an advanced version!"))
-    video2.add_comment(Comment("Jake", "I finally understand loops now."))
+class Program
+{
+    static void Main()
+    {
+        Video video1 = new Video("How to Cook Pasta", "Chef Alex", 420);
+        Video video2 = new Video("Learn C# in 10 Minutes", "CodeWithMe", 600);
+        Video video3 = new Video("Funny Cat Compilation", "KittenWorld", 300);
 
-    video3.add_comment(Comment("Olivia", "The black cat made me laugh!"))
-    video3.add_comment(Comment("Noah", "So adorable 🐱"))
-    video3.add_comment(Comment("Sophia", "I love this channel!"))
+        video1.AddComment(new Comment("Sarah", "This helped me so much, thanks!"));
+        video1.AddComment(new Comment("Mike", "Now I’m hungry again 😋"));
+        video1.AddComment(new Comment("Lena", "Perfect tutorial!"));
 
-    videos = [video1, video2, video3]
+        video2.AddComment(new Comment("Tom", "Super easy to follow!"));
+        video2.AddComment(new Comment("Emma", "Please make an advanced version!"));
+        video2.AddComment(new Comment("Jake", "I finally understand loops now."));
 
-    for video in videos:
-        video.display_video_info()
+        video3.AddComment(new Comment("Olivia", "The black cat made me laugh!"));
+        video3.AddComment(new Comment("Noah", "So adorable 🐱"));
+        video3.AddComment(new Comment("Sophia", "I love this channel!"));
 
+        List<Video> videos = new List<Video> { video1, video2, video3 };
 
-if __name__ == "__main__":
-    main()
+        foreach (var video in videos)
+        {
+            video.DisplayVideoInfo();
+        }
+    }
+}
