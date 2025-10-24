@@ -11,4 +11,21 @@ public class Order
         _customer = customer;
         _products = new List<Product>();
     }
+
+    public void AddProduct(Product product)
+    {
+        _products.Add(product);
+    }
+
+    public double GetTotalPrice()
+    {
+        double total = 0;
+        foreach (Product product in _products)
+        {
+            total += product.GetTotalCost();
+        }
+
+        total += _customer.LivesInUSA() ? 5 : 35;
+        return total;
+    }
 }
