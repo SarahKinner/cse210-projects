@@ -14,4 +14,9 @@ public class Address
         _state = state;
         _country = country;
     }
+
+    public bool IsInUSA()
+    {
+        return _country.Trim().ToLower() == "usa" || _country.Trim().ToLower() == "united states";
+    }
 }
