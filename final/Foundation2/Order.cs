@@ -28,4 +28,19 @@ public class Order
         total += _customer.LivesInUSA() ? 5 : 35;
         return total;
     }
+
+    public string GetPackingLabel()
+    {
+        string label = "Packing Label:\n";
+        foreach (Product product in _products)
+        {
+            label += $"- {product.GetPackingInfo()}\n";
+        }
+        return label;
+    }
+
+    public string GetShippingLabel()
+    {
+        return $"Shipping Label:\n{_customer.GetName()}\n{_customer.GetAddress().GetFullAddress()}";
+    }
 }
