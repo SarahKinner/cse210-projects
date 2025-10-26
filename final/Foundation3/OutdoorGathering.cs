@@ -7,7 +7,7 @@ public class OutdoorGathering : Event
     public OutdoorGathering(string title, string description, string date, string time, Address address, string weatherForecast)
         : base(title, description, date, time, address)
     {
-        _weatherForecast = weatherForecast
+        _weatherForecast = weatherForecast;
     }
 
     public override string GetFullDetails()
