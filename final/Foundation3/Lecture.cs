@@ -1,6 +1,6 @@
 using System;
 
-public Class Lecture : Event
+public class Lecture : Event
 {
     private string _speakerName;
     private int _capacity;
@@ -19,6 +19,6 @@ public Class Lecture : Event
 
     public override string GetShortDescription()
     {
-        return $"Lecture - {_speakerName} - {_capacity} attendes";
+        return $"Lecture - {_speakerName} - {_capacity} attendees";
     }
 }
