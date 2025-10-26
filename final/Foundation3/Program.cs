@@ -35,5 +35,22 @@ class Program
             address3,
             "Sunny with a light breeze"
         );
+
+        Event[] events = { lecture, reception, outdoor };
+
+        foreach (Event e in events)
+        {
+            Console.WriteLine("=== Standard Details ===");
+            Console.WriteLine(e.GetStandardDetails());
+            Console.WriteLine();
+
+            Console.WriteLine("=== Full Details ===");
+            Console.WriteLine(e.GetFullDetails());
+            Console.WriteLine();
+
+            Console.WriteLine("=== Short Description ===");
+            Console.WriteLine(e.GetShortDescription());
+            Console.WriteLine("\n--------------------------\n");
+        }
     }
 }
