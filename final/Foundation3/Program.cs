@@ -17,5 +17,14 @@ class Program
             "Dr. Jane Smith",
             150
         );
+
+        Reception reception = new Reception(
+            "Networking Gala",
+            "An evening to connect with professionals",
+            "April 10, 2025",
+            "6:30 PM",
+            address2,
+            "rsvp@galaevents.com"
+        );
     }
 }
