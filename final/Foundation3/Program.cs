@@ -26,5 +26,14 @@ class Program
             address2,
             "rsvp@galaevents.com"
         );
+
+        OutdoorGathering outdoor = new OutdoorGathering(
+            "Community Picnic",
+            "Family-friendly outdoor picnic event",
+            "May 5, 2025",
+            "12:00 PM",
+            address3,
+            "Sunny with a light breeze"
+        );
     }
 }
