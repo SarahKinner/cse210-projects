@@ -9,4 +9,14 @@ public class OutdoorGathering : Event
     {
         _weatherForecast = weatherForecast
     }
+
+    public override string GetFullDetails()
+    {
+        return $"{GetStandardDetails()}\nType: Outdoor Gathering\nWeather: {_weatherForecast}";
+    }
+
+    public override string GetShortDescription()
+    {
+        return $"Outdoor Gathering - {_weatherForecast}";
+    }
 }
