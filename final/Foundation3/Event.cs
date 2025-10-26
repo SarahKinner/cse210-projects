@@ -16,4 +16,19 @@ public class Event
         _time = time;
         _address = address;
     }
+
+    public string GetStandardDetails()
+    {
+        return $"Event: {_title}\nDescription: {_description}\nTime: {_time}\nAddress: {_address.GetFullAddress()}";
+    }
+
+    public virtual string GetFullDetails()
+    {
+        return GetStandardDetails();
+    }
+
+    public virtual string GetShortDescription()
+    {
+        return $"Event - {_title} - {_date}";
+    }
 }
