@@ -7,6 +7,8 @@ public class Event
     private string _date;
     private string _time;
     private Address _address;
+    private string _hashtag;
+    private string _promoCode;
 
     public Event(string title, string description, string date, string time, Address address)
     {
@@ -15,6 +17,9 @@ public class Event
         _date = date;
         _time = time;
         _address = address;
+
+        _hashtag = "#" + title.Replace(" ", "");
+        _promoCode = "PROMO-" + title.Replace(" ", "").ToUpper().Substring(0, Math.Min(8, title.Length));
     }
 
     public string GetStandardDetails()
@@ -24,11 +29,14 @@ public class Event
 
     public virtual string GetFullDetails()
     {
-        return GetStandardDetails();
+        return $"{GetStandardDetails()}\nHashtag: {_hashtag}\nPromo Code: {_promoCode}"; // 🌟 Include both hashtag and promo code
     }
 
     public virtual string GetShortDescription()
     {
         return $"Event - {_title} - {_date}";
     }
+
+    public string GetHashtag() => _hashtag;
+    public string GetPromoCode() => _promoCode;
 }
