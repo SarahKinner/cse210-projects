@@ -50,6 +50,10 @@ class Program
 
             Console.WriteLine("=== Short Description ===");
             Console.WriteLine(e.GetShortDescription());
+            Console.WriteLine();
+
+            Console.WriteLine($"Event Hashtag: {e.GetHashtag()}");
+            Console.WriteLine($"Promotional Code: {e.GetPromoCode()}");
             Console.WriteLine("\n--------------------------\n");
         }
     }
