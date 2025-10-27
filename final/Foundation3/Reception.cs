@@ -12,7 +12,7 @@ public class Reception : Event
 
     public override string GetFullDetails()
     {
-        return $"{GetStandardDetails()}\nType: Reception\nRSVP Email: {_rsvpEmail}";
+        return $"{GetStandardDetails()}\nType: Reception\nRSVP Email: {_rsvpEmail}\nHashtag: {GetHashtag()}\nPromo Code: {GetPromoCode()}";
     }
 
     public override string GetShortDescription()
