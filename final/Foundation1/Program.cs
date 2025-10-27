@@ -20,14 +20,16 @@ class Video
 {
     public string Title { get; set; }
     public string Author { get; set; }
+    public string Category { get; set; }
     public int LengthInSeconds { get; set; }
     public List<Comment> Comments { get; set; } = new List<Comment>();
 
-    public Video(string title, string author, int lengthInSeconds)
+    public Video(string title, string author, int lengthInSeconds, string category)
     {
         Title = title;
         Author = author;
         LengthInSeconds = lengthInSeconds;
+        Category = category;
     }
 
     public void AddComment(Comment comment)
@@ -44,6 +46,7 @@ class Video
     {
         Console.WriteLine($"Title: {Title}");
         Console.WriteLine($"Author: {Author}");
+        Console.WriteLine($"Category: {Category}");
         Console.WriteLine($"Length: {LengthInSeconds} seconds");
         Console.WriteLine($"Number of Comments: {GetNumberOfComments()}");
         Console.WriteLine("Comments:");
@@ -52,6 +55,7 @@ class Video
         {
             Console.WriteLine($"- {comment.GetCommenterName()}: {comment.GetCommentText()}");
         }
+
         Console.WriteLine(new string('-', 40));
     }
 }
@@ -60,9 +64,9 @@ class Program
 {
     static void Main()
     {
-        Video video1 = new Video("How to Cook Pasta", "Chef Alex", 420);
-        Video video2 = new Video("Learn C# in 10 Minutes", "CodeWithMe", 600);
-        Video video3 = new Video("Funny Cat Compilation", "KittenWorld", 300);
+        Video video1 = new Video("How to Cook Pasta", "Chef Alex", 420, "Cooking");
+        Video video2 = new Video("Learn C# in 10 Minutes", "CodeWithMe", 600, "Education");
+        Video video3 = new Video("Funny Cat Compilation", "KittenWorld", 300, "Comedy");
 
         video1.AddComment(new Comment("Sarah", "This helped me so much, thanks!"));
         video1.AddComment(new Comment("Mike", "Now I’m hungry again 😋"));
