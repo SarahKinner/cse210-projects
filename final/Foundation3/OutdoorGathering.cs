@@ -12,7 +12,7 @@ public class OutdoorGathering : Event
 
     public override string GetFullDetails()
     {
-        return $"{GetStandardDetails()}\nType: Outdoor Gathering\nWeather: {_weatherForecast}";
+        return $"{GetStandardDetails()}\nType: Outdoor Gathering\nWeather: {_weatherForecast}\nHashtag: {GetHashtag()}\nPromo Code: {GetPromoCode()}"; // 🌟 Added promo code
     }
 
     public override string GetShortDescription()
