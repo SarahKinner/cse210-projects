@@ -6,10 +6,15 @@ public class Order
     private List<Product> _products;
     private Customer _customer;
 
-    public Order(Customer customer)
+    private string _orderNumber;
+    private bool _priorityShipping;
+
+    public Order(Customer customer, bool priorityShipping = false)
     {
         _customer = customer;
         _products = new List<Product>();
+        _priorityShipping = priorityShipping;
+        _orderNumber = "ORD-" + new Random().Next(1000, 9999);
     }
 
     public void AddProduct(Product product)
@@ -25,7 +30,17 @@ public class Order
             total += product.GetTotalCost();
         }
 
-        total += _customer.LivesInUSA() ? 5 : 35;
+        double shippingCost;
+        if (_priorityShipping)
+        {
+            shippingCost = _customer.LivesInUSA() ? 15 : 50;  // Higher cost for priority
+        }
+        else
+        {
+            shippingCost = _customer.LivesInUSA() ? 5 : 35;   // Standard shipping
+        }
+
+        total += shippingCost;
         return total;
     }
 
@@ -42,5 +57,15 @@ public class Order
     public string GetShippingLabel()
     {
         return $"Shipping Label:\n{_customer.GetName()}\n{_customer.GetAddress().GetFullAddress()}";
+    }
+
+    public string GetOrderNumber()
+    {
+        return _orderNumber;
+    }
+
+    public bool IsPriorityShipping()
+    {
+        return _priorityShipping;
     }
 }
