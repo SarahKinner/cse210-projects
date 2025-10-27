@@ -36,8 +36,8 @@ public class Activity
         return 0;
     }
 
-    public virtual stating GetSummary()
+    public virtual string GetSummary()
     {
-        return $"{date} Activity ({_minutes} min)";
+        return $"{_date} Activity ({_minutes} min)";
     }
 }
