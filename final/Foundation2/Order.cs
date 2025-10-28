@@ -33,11 +33,11 @@ public class Order
         double shippingCost;
         if (_priorityShipping)
         {
-            shippingCost = _customer.LivesInUSA() ? 15 : 50;  // Higher cost for priority
+            shippingCost = _customer.LivesInUSA() ? 15 : 50;
         }
         else
         {
-            shippingCost = _customer.LivesInUSA() ? 5 : 35;   // Standard shipping
+            shippingCost = _customer.LivesInUSA() ? 5 : 35;
         }
 
         total += shippingCost;
