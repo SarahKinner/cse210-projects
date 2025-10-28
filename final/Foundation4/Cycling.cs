@@ -10,24 +10,15 @@ public class Cycling : Activity
         _speed = speed;
     }
 
-    public override double GetSpeed()
-    {
-        return _speed;
-    }
-
-    public override double GetDistance()
-    {
-        return (_speed * GetMinutes()) / 60;
-    }
-
-    public override double GetPace()
-    {
-        return 60 / _speed;
-    }
+    public override double GetDistance() => (_speed * GetMinutes()) / 60;
+    public override double GetSpeed() => _speed;
+    public override double GetPace() => 60 / _speed;
+    public override double GetCalories() => GetDistance() * 50;
 
     public override string GetSummary()
     {
-        return $"{GetDate()} Cycling ({GetMinutes} min) - " +
-               $"Distance: {GetDistance():F1} miles, Speed: {GetSpeed():F1} mph, Pace: {GetPace():F1} min per mile";
+        return $"{GetDate()} 🚴‍♀️ Cycling ({GetMinutes()} min) - " +
+               $"Distance: {GetDistance():F2} miles, Speed: {GetSpeed():F2} mph, Pace: {GetPace():F2} min/mile, " +
+               $"Calories: {GetCalories():F0} kcal";
     }
 }
