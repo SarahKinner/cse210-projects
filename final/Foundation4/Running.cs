@@ -10,24 +10,16 @@ public class Running : Activity
         _distance = distance;
     }
 
-    public override double GetDistance()
-    {
-        return _distance;
-    }
+    public override double GetDistance() => _distance;
+    public override double GetSpeed() => (_distance / GetMinutes()) * 60;
+    public override double GetPace() => GetMinutes() / _distance;
 
-    public override double GetSpeed()
-    {
-        return (_distance / GetMinutes()) * 60;
-    }
-
-    public override double GetPace()
-    {
-        return GetMinutes() / _distance;
-    }
+    public override double GetCalories() => _distance * 100;
 
     public override string GetSummary()
     {
         return $"{GetDate()} Running ({GetMinutes()} min) - " +
-               $"Distance: {GetDistance():F1} miles, Speed: {GetSpeed():F1} mph, Pace: {GetPace():F1} min per mile";
+               $"Distance: {GetDistance():F2} miles, Speed: {GetSpeed():F2} mph, Pace: {GetPace():F2} min/mile, " +
+               $"Calories: {GetCalories():F0} kcal";
     }
 }
