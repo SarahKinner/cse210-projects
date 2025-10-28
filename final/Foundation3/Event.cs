@@ -29,8 +29,7 @@ public class Event
 
     public virtual string GetFullDetails()
     {
-        return $"{GetStandardDetails()}\nHashtag: {_hashtag}\nPromo Code: {_promoCode}"; // 🌟 Include both hashtag and promo code
-    }
+        return $"{GetStandardDetails()}\nHashtag: {_hashtag}\nPromo Code: {_promoCode}";
 
     public virtual string GetShortDescription()
     {
