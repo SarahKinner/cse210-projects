@@ -10,25 +10,15 @@ public class Swimming : Activity
         _laps = laps;
     }
 
-    public override double GetDistance()
-    {
-        double distanceKm = _laps * 50 / 1000.0;
-        return distanceKm;
-    }
-
-    public override double GetSpeed()
-    {
-        return (GetDistance() / GetMinutes()) * 60;
-    }
-
-    public override double GetPace()
-    {
-        return GetMinutes() / GetDistance();
-    }
+    public override double GetDistance() => _laps * 50 / 1000.0 * 0.62;
+    public override double GetSpeed() => (GetDistance() / GetMinutes()) * 60;
+    public override double GetPace() => GetMinutes() / GetDistance();
+    public override double GetCalories() => GetDistance() * 70;
 
     public override string GetSummary()
     {
         return $"{GetDate()} Swimming ({GetMinutes()} min) - " +
-               $"Distance: {GetDistance():F2} km, Speed: {GetSpeed():F2} kph, Pace: {GetPace():F2} min per km";
+               $"Distance: {GetDistance():F2} miles, Speed: {GetSpeed():F2} mph, Pace: {GetPace():F2} min/mile, " +
+               $"Calories: {GetCalories():F0} kcal";
     }
 }
